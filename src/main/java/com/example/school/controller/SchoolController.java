@@ -4,6 +4,7 @@ import com.example.school.model.Student;
 import com.example.school.model.Teacher;
 import com.example.school.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class SchoolController {
     @PostMapping(value = "/teacher/{teacherId}/add", consumes = "application/json")
     public ResponseEntity<Teacher> addStudentToTeacher(@PathVariable Long teacherId, @RequestBody Student student) {
         Teacher teacher = schoolService.addStudentToTeacher(teacherId, student);
-        return ResponseEntity.ok(teacher);
+        return ResponseEntity.status(HttpStatus.CREATED).body(teacher);
     }
 
     @GetMapping("/teacher/{teacherId}/students")
