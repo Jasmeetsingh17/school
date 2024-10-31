@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-        import java.util.Set;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/school")
@@ -34,4 +35,25 @@ public class SchoolController {
         Set<Teacher> teachers = schoolService.getTeachersByStudentId(studentId);
         return ResponseEntity.ok(teachers);
     }
+    // Delete all student from given teacherId
+    @DeleteMapping("/teacher/{teacherId}/students")
+    public ResponseEntity<Void> deleteAllStudentsByTeacherId(@PathVariable Long teacherId) {
+        schoolService.deleteAllStudentsByTeacherId(teacherId);
+        return ResponseEntity.noContent().build();
+    }
+    // Delete student with mentioned studentId from given teacherId
+    @DeleteMapping("/teacher/{teacherId}/student/{studentId}")
+    public ResponseEntity<Void> deleteStudentByTeacherId(@PathVariable Long teacherId, @PathVariable Long studentId) {
+        schoolService.deleteStudentByTeacherId(teacherId, studentId);
+        return ResponseEntity.noContent().build();
+    }
+
+    //  adding list of student to teacher
+    @PostMapping(value = "/teacher/{teacherId}/add-students", consumes = "application/json")
+    public ResponseEntity<Teacher> addStudentsToTeacher(@PathVariable Long teacherId, @RequestBody List<Student> students) {
+        Teacher teacher = schoolService.addStudentsToTeacher(teacherId, students);
+        return ResponseEntity.status(HttpStatus.CREATED).body(teacher);
+    }
+
+
 }

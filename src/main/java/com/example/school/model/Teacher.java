@@ -25,8 +25,8 @@ public class Teacher {
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-   // @JsonManagedReference
-//    @JsonIgnore
+    @JsonManagedReference
+    @JsonIgnore
     private Set<Student> students = new HashSet<>();
 
     // Getters and Setters
